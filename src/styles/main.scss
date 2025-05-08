@@ -1,0 +1,47 @@
+@use "./_dark-mode-colours" as darkMode;
+@use "./_light-mode-colours" as lightMode;
+@use "./_colours" as colours;
+
+:root {
+  --background-color: #{lightMode.$white};
+  --background-color-lighter: #{lightMode.$white-dark};
+  --primary-color: #{lightMode.$dark-primary};
+  --secondary-color: #{lightMode.$dark-secondary};
+
+  --text-colour-main: #{darkMode.$text-light-grey};
+
+  --main-purple: #{colours.$main-purple};
+  --white: #{lightMode.$white};
+  --red: #{colours.$red};
+  --red-light: #{colours.$red-light};
+}
+
+[data-theme="dark"] {
+  --background-color: #{darkMode.$dark-background-colour};
+  --background-color-lighter: #{darkMode.$dark-background-colour-lighter};
+  --primary-color: #{darkMode.$text-light-grey};
+  --secondary-color: #{darkMode.$text-lightest-grey};
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color-lighter);
+  @include plus-jakarta-sans(400);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}

@@ -1,0 +1,48 @@
+@use "./_sizes" as *;
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+
+$line-height-xl: px_to_rem(32px);
+$line-height-l: px_to_rem(23px);
+$line-height-medium: px_to_rem(19px);
+$line-height-small: px_to_rem(15px);
+
+$font-size-xl: px_to_rem(24px);
+$font-size-l: px_to_rem(18px);
+$font-size-medium: px_to_rem(15px);
+$font-size-small: px_to_rem(13px);
+$font-size-xs: px_to_rem(12px);
+
+@mixin plus-jakarta-sans($weight: 400) {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: $weight;
+  font-style: normal;
+}
+
+@mixin heading-styles(
+  $fontSize,
+  $weight: 700,
+  $line-height: $line-height-medium
+) {
+  font-size: $fontSize;
+  font-weight: $weight;
+  line-height: $line-height;
+  @include plus-jakarta-sans($weight);
+}
+
+.heading-xl {
+  @include heading-styles($font-size-xl, 700, $line-height-xl);
+}
+
+.heading-l {
+  @include heading-styles($font-size-l, 700, $line-height-l);
+}
+
+.heading-medium {
+  @include heading-styles($font-size-medium, 700, $line-height-medium);
+}
+
+.heading-small {
+  @include heading-styles($font-size-small, 700, $line-height-small);
+}
