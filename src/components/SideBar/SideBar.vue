@@ -4,13 +4,10 @@ import SideBarItem from "@/components/SideBarItem/SideBarItem.vue";
 import data from "../../../data.json";
 import { ref } from "vue";
 
-console.log(data);
-
 const boardTypes = data.boards.length;
 const activeBoardName = ref<string | null>(null);
 
 const handleSidebarItemClick = (boardName: string) => {
-  console.log("Sidebar item clicked:", boardName);
   activeBoardName.value = boardName;
 };
 
@@ -60,7 +57,7 @@ const createNewBoard = () => {
   }
 
   &__menu-count {
-    color: $text-light-grey;
+    color: var(--text-colour-main);
     font-size: $font-size-xs;
     display: block;
     text-align: center;
