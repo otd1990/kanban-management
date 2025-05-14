@@ -2,6 +2,11 @@
 import SideBar from "@/components/SideBar/SideBar.vue";
 import ColourModeToggle from "@/components/ColourModeToggle/ColourModeToggle.vue";
 import BaseIcon from "@/components/BaseIcon/BaseIcon.vue";
+import BoardNav from "@/components/BoardNav/BoardNav.vue";
+import MainBoard from "./components/MainBoard/MainBoard.vue";
+// Data
+import data from "../data.json";
+// Vue
 import { computed, ref } from "vue";
 
 const currentTheme = ref<string>("light");
@@ -22,13 +27,12 @@ const changeColourMode = () => {
 
 <template>
   <div class="app">
-    <!-- <Transition name="slide" mode="out-in"> -->
     <div class="app__sidebar" :class="{ 'app__sidebar--hidden': !showSideBar }">
       <div class="app__sidebar-logo">
         <BaseIcon :name="logoName" />
       </div>
       <div class="app__sidebar-menu">
-        <SideBar />
+        <SideBar :boards="data.boards" :boards-count="data.boards.length" />
       </div>
       <div class="app__sidebar-footer">
         <ColourModeToggle @toggleColourMode="changeColourMode" />
@@ -44,7 +48,6 @@ const changeColourMode = () => {
         </div>
       </div>
     </div>
-    <!-- </Transition> -->
     <Transition name="fade" mode="out-in">
       <div v-if="!showSideBar" class="app__show-sidebar">
         <button
@@ -59,8 +62,8 @@ const changeColourMode = () => {
     </Transition>
 
     <main class="app__main" :class="{ 'app__main--collapsed': !showSideBar }">
-      <h1>Welcome to the App</h1>
-      <p>This is the main content area.</p>
+      <BoardNav board-name="Platform Launch" :disable-add-task="true" />
+      <MainBoard :boards="data.boards" />
     </main>
   </div>
 </template>
@@ -72,7 +75,7 @@ const changeColourMode = () => {
 
   &__main {
     flex: 1;
-    padding: px_to_rem(24px);
+    // padding: px_to_rem(24px);
     transition: transform 0.3s ease-out;
 
     // Default state (sidebar visible)
@@ -133,21 +136,6 @@ const changeColourMode = () => {
     z-index: 1;
   }
 }
-
-// Side bar transitions
-// .slide-enter-active {
-//   transition: all 0.3s ease-out;
-//   transition-delay: 0.35s;
-// }
-
-// .slide-leave-active {
-//   transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
-// }
-
-// .slide-enter-from,
-// .slide-leave-to {
-//   transform: translateX(-100%);
-// }
 
 // Toggle button transitions
 .fade-enter-active,

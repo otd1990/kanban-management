@@ -1,10 +1,20 @@
 <script setup lang="ts">
 import BaseIcon from "@/components/BaseIcon/BaseIcon.vue";
 import SideBarItem from "@/components/SideBarItem/SideBarItem.vue";
-import data from "../../../data.json";
+import type { Board } from "@/interfaces";
 import { ref } from "vue";
 
-const boardTypes = data.boards.length;
+interface ISideBar {
+  boards: Board[];
+
+  boardsCount: number;
+}
+
+withDefaults(defineProps<ISideBar>(), {
+  boards: () => [],
+  boardsCount: 0,
+});
+
 const activeBoardName = ref<string | null>(null);
 
 const handleSidebarItemClick = (boardName: string) => {
@@ -19,10 +29,10 @@ const createNewBoard = () => {
 <template>
   <div class="sidebar">
     <div class="sidebar__menu">
-      <span class="sidebar__menu-count">All Boards ({{ boardTypes }})</span>
+      <span class="sidebar__menu-count">All Boards ({{ boardsCount }})</span>
       <div class="sidebar__menu-boards">
         <SideBarItem
-          v-for="(board, index) in data.boards"
+          v-for="(board, index) in boards"
           :key="index"
           :boardName="board.name"
           :isActive="activeBoardName === board.name"

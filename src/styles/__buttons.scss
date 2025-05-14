@@ -1,0 +1,26 @@
+@use "./__colours.scss" as colours;
+@use "./__light-mode-colours.scss" as coloursLight;
+@use "./__dark-mode-colours.scss" as coloursDark;
+
+@use "./_sizes" as *;
+
+.btn {
+  color: coloursLight.$white;
+  height: px_to_rem(32px);
+  border-radius: px_to_rem(20px);
+  padding: 0 px_to_rem(12px);
+  font-size: px_to_rem(14px);
+
+  &--primary {
+    background-color: colours.$main-purple;
+
+    &:disabled {
+      background-color: colours.$main-purple-light;
+      color: coloursDark.$text-lightest-grey;
+    }
+  }
+  //   &__secondary {
+  //     background-color: $secondary-color;
+  //     color: #fff;
+  //   }
+}
