@@ -15,10 +15,16 @@ withDefaults(defineProps<ISideBar>(), {
   boardsCount: 0,
 });
 
+const emit = defineEmits<{
+  (e: "sidebarItemClicked", boardName: string): void;
+}>();
+
 const activeBoardName = ref<string | null>(null);
 
 const handleSidebarItemClick = (boardName: string) => {
   activeBoardName.value = boardName;
+
+  emit("sidebarItemClicked", boardName);
 };
 
 const createNewBoard = () => {

@@ -23,6 +23,12 @@ const changeColourMode = () => {
 
   currentTheme.value = newTheme;
 };
+
+const selectedBoard = ref();
+
+const updateSelectedBoard = (boardName: string) => {
+  selectedBoard.value = data.boards.find((board) => board.name === boardName);
+};
 </script>
 
 <template>
@@ -32,7 +38,11 @@ const changeColourMode = () => {
         <BaseIcon :name="logoName" />
       </div>
       <div class="app__sidebar-menu">
-        <SideBar :boards="data.boards" :boards-count="data.boards.length" />
+        <SideBar
+          :boards="data.boards"
+          :boards-count="data.boards.length"
+          @sidebar-item-clicked="updateSelectedBoard"
+        />
       </div>
       <div class="app__sidebar-footer">
         <ColourModeToggle @toggleColourMode="changeColourMode" />
@@ -62,8 +72,15 @@ const changeColourMode = () => {
     </Transition>
 
     <main class="app__main" :class="{ 'app__main--collapsed': !showSideBar }">
-      <BoardNav board-name="Platform Launch" :disable-add-task="true" />
-      <MainBoard :boards="data.boards" />
+      <BoardNav
+        :board-name="
+          selectedBoard && selectedBoard.name
+            ? selectedBoard.name
+            : 'Add a new board'
+        "
+        :disable-add-task="true"
+      />
+      <MainBoard :selected-board="selectedBoard" />
     </main>
   </div>
 </template>

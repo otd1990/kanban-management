@@ -26,7 +26,7 @@ interface IBoardNavProps {
   disableAddTask?: boolean;
 }
 withDefaults(defineProps<IBoardNavProps>(), {
-  boardName: "Platform Launch",
+  boardName: "",
   disableAddTask: false,
 });
 </script>
@@ -44,13 +44,18 @@ withDefaults(defineProps<IBoardNavProps>(), {
     display: flex;
     gap: 1rem;
   }
-  § &__actions-text {
+  &__actions-text {
     font-size: px_to_rem(12px);
   }
 
   &__actions-btn {
     display: flex;
     align-items: center;
+    background-color: none;
+  }
+
+  &__title-text {
+    color: var(--text-dark);
   }
 }
 </style>
