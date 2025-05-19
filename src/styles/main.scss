@@ -14,6 +14,8 @@
   --white: #{lightMode.$white};
   --red: #{colours.$red};
   --red-light: #{colours.$red-light};
+
+  --text-dark: #{darkMode.$dark-background-colour};
 }
 
 [data-theme="dark"] {
@@ -21,6 +23,7 @@
   --background-color-lighter: #{darkMode.$dark-background-colour-lighter};
   --primary-color: #{darkMode.$text-light-grey};
   --secondary-color: #{darkMode.$text-lightest-grey};
+  --text-dark: #{darkMode.$text-lightest-grey};
 }
 
 *,
