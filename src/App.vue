@@ -4,13 +4,17 @@ import ColourModeToggle from "@/components/ColourModeToggle/ColourModeToggle.vue
 import BaseIcon from "@/components/BaseIcon/BaseIcon.vue";
 import BoardNav from "@/components/BoardNav/BoardNav.vue";
 import MainBoard from "./components/MainBoard/MainBoard.vue";
+import TaskModal from "@/components/TaskModal/TaskModal.vue";
 // Data
 import data from "../data.json";
 // Vue
 import { computed, ref } from "vue";
+import type { Task } from "./interfaces";
 
 const currentTheme = ref<string>("light");
 const showSideBar = ref<boolean>(true);
+const selectedTask = ref<Task | null>(null);
+const showTaskModal = ref<boolean>(false);
 
 const logoName = computed(() => {
   return currentTheme.value === "dark" ? "logo-light" : "logo-dark";
@@ -28,6 +32,12 @@ const selectedBoard = ref();
 
 const updateSelectedBoard = (boardName: string) => {
   selectedBoard.value = data.boards.find((board) => board.name === boardName);
+};
+
+const showTask = (task: Task) => {
+  console.log("Task clicked:", task);
+  selectedTask.value = task;
+  showTaskModal.value = true;
 };
 </script>
 
@@ -72,6 +82,7 @@ const updateSelectedBoard = (boardName: string) => {
     </Transition>
 
     <main class="app__main" :class="{ 'app__main--collapsed': !showSideBar }">
+      <h1>Show task modal {{ showTaskModal }}</h1>
       <BoardNav
         :board-name="
           selectedBoard && selectedBoard.name
@@ -80,8 +91,15 @@ const updateSelectedBoard = (boardName: string) => {
         "
         :disable-add-task="true"
       />
-      <MainBoard :selected-board="selectedBoard" />
+      <MainBoard :selected-board="selectedBoard" @task-clicked="showTask" />
     </main>
+    <Teleport to="body">
+      <TaskModal
+        v-if="showTaskModal"
+        @close="showTaskModal = false"
+        :task="selectedTask"
+      />
+    </Teleport>
   </div>
 </template>
 

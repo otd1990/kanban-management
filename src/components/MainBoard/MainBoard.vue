@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BaseIcon from "@/components/BaseIcon/BaseIcon.vue";
-import type { Board } from "@/interfaces";
+import type { Board, Task } from "@/interfaces";
 
 interface IMainBoard {
   selectedBoard: Board | undefined;
@@ -9,6 +9,10 @@ interface IMainBoard {
 withDefaults(defineProps<IMainBoard>(), {
   selectedBoard: undefined,
 });
+
+defineEmits<{
+  (e: "taskClicked", task: Task): void;
+}>();
 
 const subTaskCompleteCount = (task: {
   subtasks: { isCompleted: boolean }[];
@@ -40,13 +44,17 @@ const subTaskCompleteCount = (task: {
           <h4 class="main-board__column-name">
             {{ board.name }}
           </h4>
-          <div v-for="task in board.tasks" class="main-board__task">
+          <button
+            v-for="task in board.tasks"
+            class="main-board__task button button-reset"
+            @click="$emit('taskClicked', task)"
+          >
             <h5 class="main-board__task-title">{{ task.title }}</h5>
             <p class="main-board__task-sub-tasks-count">
               {{ subTaskCompleteCount(task) }} of
               {{ task.subtasks.length }} subtasks
             </p>
-          </div>
+          </button>
         </section>
       </div>
     </div>
