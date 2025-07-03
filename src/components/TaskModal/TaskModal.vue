@@ -2,6 +2,7 @@
 import { computed, ref } from "vue";
 import type { Task } from "@/interfaces";
 import BaseIcon from "../BaseIcon/BaseIcon.vue";
+import SubTaskItem from "../SubTaskItem/SubTaskItem.vue";
 
 interface ITaskModal {
   task: Task | null;
@@ -43,9 +44,7 @@ const subTaskCompleteCount = computed(() => {
           <BaseIcon name="icon-vertical-ellipsis" />
         </button>
         <div v-if="showActions" class="task-modal__actions">
-          <button class="task-modal__action-btn button-reset">
-            Edit Task --- {{ showActions }}
-          </button>
+          <button class="task-modal__action-btn button-reset">Edit Task</button>
           <button
             class="task-modal__action-btn task-modal__action-btn--delete button-reset"
           >
@@ -68,14 +67,15 @@ const subTaskCompleteCount = computed(() => {
         </p>
         <div class="task-modal__subtasks">
           <ul class="task-modal__subtask-list">
-            <li
-              v-for="(subtask, index) in task?.subtasks"
-              :key="index"
-              class="task-modal__subtask-list-item"
-            >
+            <!-- <li>
               <input type="checkbox" :checked="subtask.isCompleted" />
               <span>{{ subtask.title }}</span>
-            </li>
+            </li> -->
+            <SubTaskItem
+              v-for="(subtask, index) in task?.subtasks"
+              :task-title="subtask.title"
+              :isComplete="subtask.isCompleted"
+            />
           </ul>
         </div>
       </div>
@@ -165,6 +165,11 @@ const subTaskCompleteCount = computed(() => {
     font-size: px_to_rem(12px);
     font-weight: bold;
     letter-spacing: 1px;
+  }
+
+  &__subtask-list {
+    list-style: none;
+    padding: 0;
   }
 }
 </style>
